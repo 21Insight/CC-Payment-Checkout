@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import ProductDisplay from "./ProductDisplay.vue";
+import ProductDisplay from "./../../src/components/ProductDisplay.vue";
 
 describe("ProductDisplay", () => {
   test("renders the component", () => {

@@ -14,24 +14,6 @@
           <p class="text-muted">Categoría del Producto</p>
           <p>{{ product.description }}</p>
           <p class="font-weight-bold">Precio: ${{ product.price }}</p>
-          <!-- Opciones del Producto (tallas, colores, etc.) -->
-          <b-form-group label="Talla">
-            <b-form-select v-model="selectedSize">
-              <b-form-select-option value="small">Pequeña</b-form-select-option>
-              <b-form-select-option value="medium"
-                >Mediana</b-form-select-option
-              >
-              <b-form-select-option value="large">Grande</b-form-select-option>
-            </b-form-select>
-          </b-form-group>
-
-          <b-form-group label="Color">
-            <b-form-select v-model="selectedColor">
-              <b-form-select-option value="red">Rojo</b-form-select-option>
-              <b-form-select-option value="blue">Azul</b-form-select-option>
-              <b-form-select-option value="green">Verde</b-form-select-option>
-            </b-form-select>
-          </b-form-group>
           <!-- Botón de Compra -->
           <b-button @click="openCreditCardModal"
             >Pagar con Tarjeta de Crédito</b-button

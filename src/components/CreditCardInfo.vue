@@ -52,7 +52,7 @@
               v-model="creditCard.cvv"
               id="cvv"
               mask="####"
-              placeholder="####"
+              placeholder="###"
               :show="false"
               class="form-control"
               type="tel"
@@ -109,14 +109,17 @@ export default {
       }
     },
     isValidExpirationDate(expirationDate) {
-      const [month, year] = expirationDate.split("/");
+      const month = parseInt(expirationDate.substring(0, 2), 10);
+      const year = parseInt(expirationDate.substring(2), 10);
+      if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+        return false;
+      }
       const currentDate = new Date();
-      const expiration = new Date(`20${year}`, month - 1);
-
+      const expiration = new Date(2000 + year, month, 1);
       return expiration > currentDate;
     },
     isValidCVV(cvv, cardNumber) {
-      if (cardNumber.startsWith("3")) {
+      if (cardNumber && cardNumber.startsWith("3")) {
         return cvv.length === 4;
       } else {
         return cvv.length === 3;
@@ -137,7 +140,6 @@ export default {
       }
     },
     handleOk() {
-      console.log(this.validateCreditCard());
       this.$router.push({ name: "summaryPayment" });
       this.$bvModal.hide("creditCardModal");
     },

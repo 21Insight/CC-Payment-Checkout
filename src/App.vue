@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <ProductDisplay />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ProductDisplay from "./components/ProductDisplay.vue";
-
 export default {
   name: "App",
-  components: {
-    ProductDisplay,
-  },
 };
 </script>
 

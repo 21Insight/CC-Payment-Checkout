@@ -1,18 +1,52 @@
 <template>
-  <div>
-    <h2>Resumen del Pago</h2>
-    <p>Producto: {{ product.name }}</p>
-    <p>Precio: ${{ product.price }}</p>
-    <!-- Otros detalles del resumen -->
-    <b-button @click="confirmPayment">Confirmar Pago</b-button>
-  </div>
+  <b-container>
+    <div class="row justify-content-center align-items-center use-all-space">
+      <div class="card">
+        <h2 class="mb-4">Resumen de Pago</h2>
+
+        <b-row>
+          <b-col>
+            <b-card>
+              <h4 class="mb-3">Detalles del Producto</h4>
+              <p>{{ product.name }} - ${{ product.price }}</p>
+            </b-card>
+          </b-col>
+
+          <b-col>
+            <b-card>
+              <h4 class="mb-3">Detalles de la Tarjeta</h4>
+              <p>Número de Tarjeta: **** **** **** {{ cardInfo.cardNumber }}</p>
+              <p>Fecha de Vencimiento: {{ cardInfo.expirationDate }}</p>
+              <p>CVV: ***</p>
+            </b-card>
+          </b-col>
+        </b-row>
+
+        <b-button @click="confirmPayment" variant="success"
+          >Confirmar Pago</b-button
+        >
+      </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
+import { EventBus } from "./../services/event-bus.js";
 export default {
+  data() {
+    return {
+      cardInfo: {
+        cardNumber: "",
+        cvv: "",
+        expirationDate: "",
+      },
+    };
+  },
+  created() {
+    EventBus.$on("card-info-submitted", this.handleCardInfoSubmitted);
+  },
   computed: {
     product() {
-      // Recuperar información del producto desde el store o local storage
       return {
         name: "Producto Ejemplo",
         price: 19.99,
@@ -21,11 +55,8 @@ export default {
   },
   methods: {
     confirmPayment() {
-      // Lógica para confirmar el pago y realizar la llamada API
       this.$store
-        .dispatch("confirmPayment", {
-          /* datos del pago */
-        })
+        .dispatch("confirmPayment", {})
         .then(() => {
           this.$router.push({ name: "finalStatus" });
         })
@@ -36,10 +67,18 @@ export default {
           });
         });
     },
+    handleCardInfoSubmitted(cardInfo) {
+      console.log("Datos de la tarjeta recibidos en SummaryPayment:", cardInfo);
+      this.cardInfo.cardNumber = cardInfo.cardNumber.slice(-4);
+      this.cardInfo.cvv = cardInfo.cvv;
+      this.cardInfo.expirationDate = cardInfo.expirationDate;
+    },
   },
 };
 </script>
 
 <style scoped>
-/* Estilos específicos del componente */
+.use-all-space {
+  height: 100vh;
+}
 </style>

@@ -2,7 +2,6 @@
   <div>
     <h2>Estado Final del Pago</h2>
     <p>{{ paymentStatus }}</p>
-    <!-- Otros detalles del estado final -->
   </div>
 </template>
 
@@ -10,13 +9,10 @@
 export default {
   computed: {
     paymentStatus() {
-      // Recuperar el estado final del pago desde el store o local storage
-      return "Éxito"; // O "Fracaso" según la respuesta de la API
+      return "Éxito";
     },
   },
 };
 </script>
 
-<style scoped>
-/* Estilos específicos del componente */
-</style>
+<style scoped></style>

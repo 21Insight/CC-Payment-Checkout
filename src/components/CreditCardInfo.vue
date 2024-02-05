@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import { EventBus } from "./../services/event-bus.js";
 export default {
   data() {
     return {
@@ -140,8 +141,12 @@ export default {
       }
     },
     handleOk() {
-      this.$router.push({ name: "summaryPayment" });
-      this.$bvModal.hide("creditCardModal");
+      this.validateCreditCard();
+      EventBus.$emit("card-info-submitted", {
+        cardNumber: this.creditCard.number,
+        expirationDate: this.creditCard.expirationDate,
+        cvv: this.creditCard.cvv,
+      });
     },
   },
 };
